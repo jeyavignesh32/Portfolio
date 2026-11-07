@@ -1,0 +1,294 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap');
+
+:root {
+  --bg-primary: #030612;
+  --bg-secondary: #080c1e;
+  --bg-tertiary: #0e142c;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #a8b8d0;
+  --text-muted: #7384a3;
+  
+  --accent-blue: #00f0ff;
+  --accent-purple: #8a2be2;
+  --accent-pink: #ff007f;
+  --accent-yellow: #ffea00;
+  --accent-gradient: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink), var(--accent-yellow));
+  
+  --glass-bg: rgba(20, 25, 45, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-glow: rgba(0, 240, 255, 0.2);
+  
+  --nav-height: 80px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Page Background Effects - Floating Orbs */
+.page-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg-primary);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 20s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+  top: -10%; left: -10%;
+  width: 500px; height: 500px;
+  background: rgba(0, 225, 255, 0.3);
+  animation-delay: 0s;
+}
+
+.orb-2 {
+  bottom: -10%; right: -10%;
+  width: 600px; height: 600px;
+  background: rgba(157, 0, 255, 0.3);
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  top: 40%; left: 60%;
+  width: 400px; height: 400px;
+  background: rgba(255, 0, 255, 0.2);
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -40px) scale(1.15); }
+  66% { transform: translate(-40px, 80px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+/* Scanlines Overlay */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.008) 2px,
+    rgba(255, 255, 255, 0.008) 4px
+  );
+}
+
+/* Grid Pattern */
+.grid-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 70%);
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-size: 2.8rem;
+  margin-bottom: 4rem;
+  text-align: center;
+  position: relative;
+  color: transparent;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 800;
+  animation: glow-pulse 3s infinite alternate;
+}
+
+@keyframes glow-pulse {
+  0% { text-shadow: 0 0 20px rgba(157, 0, 255, 0.2); }
+  100% { text-shadow: 0 0 40px rgba(0, 225, 255, 0.6); }
+}
+
+/* Glassmorphism Bento Cards */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 30px 0 var(--glass-glow);
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+/* Text Effects */
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(0, 225, 255, 0.8), 0 0 40px rgba(157, 0, 255, 0.6);
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--accent-blue), var(--accent-purple));
+  border-radius: 5px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  position: relative;
+  z-index: 1;
+  background-size: 200% auto;
+  animation: gradientMove 5s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 25px var(--glass-glow), 0 0 50px rgba(157, 0, 255, 0.5);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.btn-outline {
+  background: rgba(255,255,255,0.03);
+  border: 2px solid var(--accent-blue);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 225, 255, 0.1);
+  box-shadow: 0 0 20px var(--glass-glow);
+  transform: translateY(-3px) scale(1.05);
+  border-color: white;
+}

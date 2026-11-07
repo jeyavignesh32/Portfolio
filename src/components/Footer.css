@@ -1,0 +1,176 @@
+.footer {
+  position: relative;
+  background: var(--bg-secondary);
+  padding: 60px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 40px;
+  overflow: hidden;
+}
+
+.footer-glow {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(0, 225, 255, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.footer-brand {
+  flex-shrink: 0;
+}
+
+.footer-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.footer-links a:hover {
+  color: var(--accent-blue);
+}
+
+.footer-links a:hover::after {
+  width: 100%;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.footer-social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-social-icon:hover {
+  color: white;
+  background: var(--accent-gradient);
+  border-color: transparent;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 225, 255, 0.25);
+}
+
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 225, 255, 0.3), rgba(157, 0, 255, 0.3), transparent);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.footer-copyright {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.heart-icon {
+  color: #ef4444;
+  animation: heartbeat 1.5s infinite;
+  display: inline-block;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.back-to-top {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+  background: rgba(0, 225, 255, 0.1);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 225, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .footer-links {
+    gap: 16px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
