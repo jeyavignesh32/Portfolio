@@ -11,15 +11,26 @@ dotenv.config();
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
 
 // -------------------- SECURITY --------------------
 
 app.use(helmet());
 
+// Allow production portfolio and local development frontend
+const allowedOrigins = [
+  "https://jeyavignesh32.github.io",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
   })
@@ -55,7 +66,10 @@ const missingEnv = requiredEnv.filter(
 );
 
 if (missingEnv.length > 0) {
-  console.error("Missing environment variables:", missingEnv.join(", "));
+  console.error(
+    "Missing environment variables:",
+    missingEnv.join(", ")
+  );
   process.exit(1);
 }
 
@@ -99,7 +113,10 @@ const transporter = nodemailer.createTransport({
 // Verify SMTP connection when server starts
 transporter.verify((error) => {
   if (error) {
-    console.error("Brevo SMTP connection failed:", error.message);
+    console.error(
+      "Brevo SMTP connection failed:",
+      error.message
+    );
   } else {
     console.log("Brevo SMTP connection successful.");
   }
@@ -118,7 +135,13 @@ app.get("/", (req, res) => {
 
 app.post("/api/contact", contactLimiter, async (req, res) => {
   try {
-    const { name, email, subject, message, website } = req.body || {};
+    const {
+      name,
+      email,
+      subject,
+      message,
+      website,
+    } = req.body || {};
 
     // Honeypot field: silently accept bot submissions
     if (website) {
@@ -220,7 +243,7 @@ ${cleanMessage}
       messageId: info.messageId,
     });
 
-    // SMTP acceptance is not the same as final inbox delivery
+    // Check whether Brevo accepted the recipient
     const recipientAccepted = info.accepted.some(
       (address) =>
         address.toLowerCase() ===
@@ -238,6 +261,7 @@ ${cleanMessage}
       success: true,
       message: "Your message was accepted for email processing.",
     });
+
   } catch (error) {
     console.error("Contact email error:", {
       message: error.message,
@@ -256,7 +280,11 @@ ${cleanMessage}
 // -------------------- INVALID JSON HANDLER --------------------
 
 app.use((error, req, res, next) => {
-  if (error instanceof SyntaxError && error.status === 400 && "body" in error) {
+  if (
+    error instanceof SyntaxError &&
+    error.status === 400 &&
+    "body" in error
+  ) {
     return res.status(400).json({
       success: false,
       message: "Invalid request data.",
